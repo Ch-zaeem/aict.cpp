@@ -1,0 +1,114 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Define constants for limits
+const int MAX_PROGRAMS = 3;
+const int MAX_STUDENTS = 5;
+
+// Define structures for program and student information
+struct Program {
+    string name;
+    short maxSeats;
+    short minEligibility;
+    short availableSeats;
+};
+
+struct Student {
+    string name;
+    string email;
+    string phone;
+    string cnic;
+    short marksObtained;
+    short totalMarks;
+    short percentage;
+    string preferredPrograms[2];
+    string admissionStatus;
+    string rejectionReason;
+};
+
+int main() {
+    Program programs[MAX_PROGRAMS];
+    Student students[MAX_STUDENTS];
+    int programCount = 0;
+    int studentCount = 0;
+
+    int choice = 0;
+    cout << "--- University Admission Management System ---\n";
+    cout << "1. Login as Admin\n";
+    cout << "2. Apply as Student\n";
+    cout << "3. Exit\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    if (choice == 1) {
+        string username, password;
+        cout << "\n--- Admin Login ---\n";
+        cout << "Enter username: ";
+        cin >> username;
+        cout << "Enter password: ";
+        cin >> password;
+
+         if (username == "admin" && password == "admin123") {
+            cout << "Login successful!\n";
+
+            int adminChoice;
+            cout << "\n--- Admin Dashboard ---\n";
+            cout << "1. Add a New Program\n";
+            cout << "2. View Application Statuses\n";
+            cout << "Enter your choice: ";
+            cin >> adminChoice;
+
+            if (adminChoice == 1) {
+                if (programCount >= MAX_PROGRAMS) {
+                    cout << "Program limit reached. Cannot add more programs.\n";
+                } else {
+                    Program newProgram;
+                    cout << "\n--- Add a New Program ---\n";
+                    cout << "Enter program name: ";
+                    cin >> newProgram.name;
+                    cout << "Enter maximum seats: ";
+                     cin >> newProgram.maxSeats;
+                    cout << "Enter minimum eligibility percentage: ";
+                    cin >> newProgram.minEligibility;
+
+                    newProgram.availableSeats = newProgram.maxSeats;
+                    programs[programCount++] = newProgram;
+
+                    cout << "Program added successfully!\n";
+                }
+            } else if (adminChoice == 2) {
+                if (studentCount == 0) {
+                    cout << "No applications to show.\n";
+                } else {
+                    for (int i = 0; i < studentCount; i++) {
+                        cout << "\n--- Application Status ---\n";
+                        cout << "Name: " << students[i].name << "\n";
+                        cout << "Status: " << students[i].admissionStatus << "\n";
+                        if (students[i].admissionStatus == "Rejected") {
+                            cout << "Reason: " << students[i].rejectionReason << "\n";
+                        }
+                    }
+                                 }
+            }
+        } else {
+            cout << "Invalid credentials.\n";
+        }
+    } else if (choice == 2) {
+        if (studentCount >= MAX_STUDENTS) {
+            cout << "Student limit reached. Cannot accept more applications.\n";
+        } else {
+            Student newStudent;
+            cout << "\n--- Student Application Form ---\n";
+            cout << "Enter your name: ";
+            cin >> newStudent.name;
+            cout << "Enter your email: ";
+            cin >> newStudent.email;
+             cout << "Enter your phone number: ";
+            cin >> newStudent.phone;
+            cout << "Enter your CNIC: ";
+            cin >> newStudent.cnic;
+            cout << "Enter your marks obtained: ";
+            cin >> newStudent.marksObtained;
+            cout << "Enter total marks: ";
+            cin >> newStudent.totalMarks;
